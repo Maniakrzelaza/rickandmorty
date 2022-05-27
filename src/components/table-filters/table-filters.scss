@@ -1,0 +1,28 @@
+.filters {
+  grid-area: filters;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &__search-icon {
+    color: $lochmara;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+  }
+
+  &__search {
+    min-width: 140px;
+    max-width: 140px;
+    min-height: 40px;
+    max-height: 40px;
+    border-radius: 5px;
+    border: 1px solid $casper;
+    margin-right: 48px;
+
+    input::placeholder {
+      font-size: 14px;
+      color: $oslo-gray;
+    }
+  }
+}

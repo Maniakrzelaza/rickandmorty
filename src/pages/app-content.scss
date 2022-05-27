@@ -1,0 +1,238 @@
+.app-content {
+  padding: 55px 0 0 0;
+  width: 95%;
+  max-width: 1161px;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-gap: 25px;
+  grid-template:
+  "header" 102px
+  "table";
+
+  @media #{$medium-up} {
+    width: 85%;
+  }
+
+  &__cell-tooltip {
+    .ant-tooltip-arrow {
+      visibility: hidden;
+    }
+
+    .ant-tooltip-content {
+      .ant-tooltip-inner {
+        padding: 0;
+        background-color: white;
+        border: 1px solid $botticelli;
+        box-shadow: 4px 4px 8px rgba(221, 227, 236, 0.5);
+        border-radius: 5px;
+      }
+    }
+
+    &__header {
+      font-weight: 400;
+      font-size: 12px;
+      color: $oslo-gray;
+      border-bottom: 1px solid $mystic;
+      padding: 8px 12px;
+    }
+
+    &__body {
+      padding: 8px 12px;
+    }
+  }
+
+  &__header {
+    grid-area: header;
+    height: 102px;
+    max-height: 102px;
+    display: grid;
+    grid-gap: 24px;
+    grid-template:
+    "title"
+    "filters" 40px;
+  }
+
+  &__table {
+    grid-area: table;
+    display: grid;
+    grid-gap: 43px;
+    grid-template-rows: min-content 40px;
+  }
+
+  &__avatar {
+    border: 2px dashed $mystic;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 15px;
+  }
+
+  .ant-pagination-item {
+    min-width: 40px;
+    min-height: 40px;
+    font-family: "Oswald", sans-serif;
+    background: $white;
+    border: 1px solid $casper;
+    box-shadow: 0 2px 4px $mystic-2;
+    border-radius: 5px;
+
+    > a {
+      margin-top: 4px;
+      font-weight: 500;
+      font-size: 14px;
+      color: $abbey;
+    }
+
+    &:hover, &-active {
+      background: $mystic-3;
+    }
+  }
+
+  .ant-select-arrow .anticon:not(.ant-select-suffix) {
+    pointer-events: none;
+  }
+
+  .ant-table-thead th.ant-table-column-sort,
+  .ant-table-column-sorter,
+  th.ant-table-column-has-sorters:hover {
+    background: $white;
+  }
+
+  .ant-pagination-prev, .ant-pagination-next {
+    min-width: 40px;
+    min-height: 40px;
+
+
+    .ant-pagination-item-link {
+      border: 1px solid $casper;
+      border-radius: 5px;
+
+      &:not([disabled]) {
+        &:hover {
+          background: $mystic-3;
+        }
+      }
+    }
+  }
+
+  .ant-table-pagination.ant-pagination {
+    margin-top: 44px;
+  }
+
+  .ant-pagination-jump-next,
+  .ant-pagination-jump-prev {
+    min-height: 40px;
+
+    .ant-pagination-item-ellipsis {
+      margin-top: 4px !important;
+    }
+  }
+
+  .ant-table {
+    filter: drop-shadow(0px 2px 18px $mystic-2);
+    border-radius: 5px;
+  }
+
+  .ant-checkbox-inner {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ant-table-cell {
+    background-color: $white;
+    &::before {
+      display: none;
+    }
+  }
+
+  .ant-table-selection-col {
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+  }
+
+  .ant-table-selection-column {
+    padding-left: 22px;
+  }
+
+  td.ant-table-selection-column {
+    padding-top: 0;
+    .ant-checkbox {
+      top: 0;
+    }
+  }
+  .ant-table-tbody > tr > td {
+    border-bottom: 1px solid $mystic;
+  }
+
+}
+
+.table {
+  &__title {
+    font-weight: 700;
+    font-size: 24px;
+    color: $mirage;
+    grid-area: title;
+  }
+
+  &__header-font {
+    font-weight: 500;
+    font-size: 14px;
+    color: $mirage;
+
+    &--light {
+      @extend .table__header-font;
+      font-weight: 400;
+    }
+  }
+
+  &__primary-font {
+    font-weight: 500;
+    font-size: 15px;
+    color: $mirage;
+
+    &.dead {
+      color: $nevada;
+    }
+
+    &--light {
+      @extend .table__primary-font;
+      font-weight: 400;
+
+      &.dead {
+        color: $nevada;
+      }
+    }
+  }
+
+  &__secondary-font {
+    color: $abbey;
+    font-size: 15px;
+
+    &.dead {
+      color: $oslo-gray;
+    }
+  }
+
+  &__status {
+    margin-left: 8px;
+  }
+
+  &__unknown-status {
+    font-weight: 500;
+    font-size: 14px;
+    color: $nevada;
+  }
+
+  &__unknown-origin {
+    font-weight: 400;
+    font-size: 15px;
+    color: $silver-sand;
+  }
+
+  &__dead-row {
+    .ant-table-cell {
+      background-color: $aqua-haze;
+    }
+  }
+}

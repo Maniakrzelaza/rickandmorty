@@ -1,0 +1,89 @@
+.inputs {
+
+  &__btn {
+    min-width: 156px;
+    min-height: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: 500;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.35);
+
+    &__icon {
+      margin-right: 12px;
+    }
+
+    &:hover {
+      border: 1px solid rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  &__change-status-btn {
+    @extend .inputs__btn;
+    min-width: 171px;
+    margin-right: 24px;
+    background-color: $lochmara;
+
+    &.hidden {
+      visibility: hidden;
+    }
+  }
+
+  &__remove-btn {
+    @extend .inputs__btn;
+    background-color: $tall-poppy;
+
+    &:hover {
+      background-color: $pomegranate;
+    }
+  }
+
+  &__select {
+    min-width: 140px;
+    max-width: 140px;
+    min-height: 40px;
+    max-height: 40px;
+    margin-right: 36px;
+
+    .ant-select-selector {
+      align-items: center;
+      height: 100% !important;
+      border: 1px solid $casper !important;
+      border-radius: 5px !important;
+
+      .ant-select-selection-overflow {
+        flex-wrap: nowrap;
+        flex-direction: row;
+        overflow: hidden;
+      }
+    }
+
+    .ant-select-selection-placeholder {
+      color: $abbey;
+      font-size: 14px;
+    }
+  }
+
+  &__select-caret {
+    color: $nevada;
+  }
+
+  &__edit-status-select {
+    min-height: 40px;
+    max-height: 40px;
+    height: 40px;
+    .ant-select-selector {
+      align-items: center;
+      height: 100% !important;
+      border: 1px solid $casper !important;
+      border-radius: 5px !important;
+
+      .ant-select-selection-overflow {
+        flex-wrap: nowrap;
+        flex-direction: row;
+        overflow: hidden;
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "src/styles";
+
+.app {
+  overflow-x: hidden;
+  background-color: $link-water;
+  width: 100%;
+  height: 100%;
+  color: white;
+
+  display: grid;
+  grid-template:
+  "content";
+}
+
+.app-root-content {
+  grid-area: content;
+}
+
+div {
+  font-family: "Oswald", sans-serif;
+}
+
+.MuiSelect-filled {
+  padding: 5px !important;
+  background-color: white !important;
+  border-radius: 5px !important;
+}
+
+.MuiFilledInput-root {
+  border-radius: 5px !important;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.parti {
+  canvas {
+    pointer-events: none !important;
+  }
+
+}
