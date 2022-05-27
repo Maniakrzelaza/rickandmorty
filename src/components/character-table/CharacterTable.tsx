@@ -1,6 +1,6 @@
 import React, {useCallback, useMemo} from "react";
 import { Character } from "rickmortyapi/dist/interfaces";
-import { Select, Table, Tooltip } from "antd";
+import { Select, Table } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import { Status } from "../../data/character-model";
 import classNames from "classnames";
@@ -10,6 +10,7 @@ import { CaretDownOutlined } from "@ant-design/icons";
 import StatusIcon from "../StatusIcon";
 import random from "random-seed";
 import overrideDataService from "../../data/override-data-service";
+import TooltipHeader from "../tooltip-header/TooltipHeader";
 
 const columns = (
     isLargeUp: boolean,
@@ -47,23 +48,12 @@ const columns = (
                     </div>
                 </>
             )
-            const tooltipContent = (
-                <div className="flex flex-column">
-                    <div className="app-content__cell-tooltip__header">
-                        Name
-                    </div>
-                    <div className="d-flex flex-column app-content__cell-tooltip__body">
-                        {cellContent(true)}
-                    </div>
-                </div>
-            )
             return (
-                <Tooltip overlayClassName="app-content__cell-tooltip" placement="rightTop" title={tooltipContent}>
-                    <div className="d-flex flex-column">
-                        {cellContent()}
-                    </div>
-                </Tooltip>
-
+                <TooltipHeader
+                    cellContent={cellContent}
+                    name="Name"
+                    position="rightTop"
+                />
             )
         }
     },
@@ -111,23 +101,12 @@ const columns = (
                     {locationService.getType(data.url)}
                 </div>
             </>
-
-            const tooltipContent = (
-                <div className="flex flex-column">
-                    <div className="app-content__cell-tooltip__header">
-                        Location
-                    </div>
-                    <div className="d-flex flex-column app-content__cell-tooltip__body">
-                        {cellContent(true)}
-                    </div>
-                </div>
-            )
             return (
-                <Tooltip overlayClassName="app-content__cell-tooltip" placement="leftTop" title={tooltipContent}>
-                    <div className="d-flex flex-column">
-                        {cellContent()}
-                    </div>
-                </Tooltip>
+                <TooltipHeader
+                    cellContent={cellContent}
+                    name="Location"
+                    position="leftTop"
+                />
             )
         }
     },
@@ -169,20 +148,12 @@ const columns = (
                     </div>
                 </div>
             )
-            const tooltipContent = <div className="flex flex-column">
-                <div className="app-content__cell-tooltip__header">
-                    Episodes
-                </div>
-                <div className="d-flex flex-column app-content__cell-tooltip__body">
-                    {cellContent(true)}
-                </div>
-            </div>
             return (
-                <Tooltip overlayClassName="app-content__cell-tooltip" placement="leftTop" title={tooltipContent}>
-                    <div className="d-flex flex-column">
-                        {cellContent()}
-                    </div>
-                </Tooltip>
+                <TooltipHeader
+                    cellContent={cellContent}
+                    name="Episodes"
+                    position="leftTop"
+                />
             )
         }
     },
@@ -274,9 +245,7 @@ const CharacterTable: React.FC<ICharacterTableProps> = ({
     const config = useMemo(() => ({
         bordered: false,
         loading: loading,
-        title: undefined,
         showHeader: true,
-        rowSelection: {},
         hasData: characterCount > 0,
     }), [characterCount, loading]);
 
@@ -288,8 +257,6 @@ const CharacterTable: React.FC<ICharacterTableProps> = ({
             columns={columnsDefinitions}
             dataSource={filteredCharacters}
             pagination={{ defaultPageSize: 5, showLessItems: true, showSizeChanger: false }}
-            // scroll={{ x: "300px" }}
-            // tableLayout="fixed"
             rowClassName={(record: Character) => {
                 return record.status === "Dead" ? "table__dead-row" : "";
             }}

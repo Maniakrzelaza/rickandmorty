@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { Button, Input, Select } from "antd";
 import { CaretDownOutlined, SearchOutlined } from "@ant-design/icons";
 import { Species, SpeciesValues, Status } from "../../data/character-model";
@@ -6,26 +6,45 @@ import locationService from "../../data/location-service";
 import classNames from "classnames";
 import edit from "assets/svg/edit.svg"
 import trash from "assets/svg/trash.svg"
+import { filterCharacters } from "../../data/character-functions";
+import { Character } from "rickmortyapi/dist/interfaces";
 
 type ITableFiltersProps = {
     numberOfSelectedCharacters: number,
-    onFilterTextChange: (e) => void,
-    onFilterSpeciesChange: (species: Species[]) => void,
-    onFilterOriginsChange: (origins: string[]) => void ,
-    onFilterStatusChange: (status: Status) => void,
     toggleEditable: () => void,
     removeCharacters: () => void,
+    setFilteredCharacters: React.Dispatch<React.SetStateAction<Character[]>>,
+    charactersDataToUse: Character[],
 }
 
 const TableFilters: React.FC<ITableFiltersProps> = ({
     numberOfSelectedCharacters,
-    onFilterSpeciesChange,
-    onFilterTextChange,
-    onFilterOriginsChange,
-    onFilterStatusChange,
     toggleEditable,
     removeCharacters,
+    setFilteredCharacters,
+    charactersDataToUse,
 }) => {
+    const [filterText, setFilterText] = useState<string>(null);
+    const [filterSpecies, setFilterSpecies] = useState<Species[]>([]);
+    const [filterOrigins, setFilterOrigins] = useState<string[]>([]);
+    const [filterStatus, setFilterStatus] = useState<Status>(null);
+
+    const onFilterTextChange = useCallback((e) => setFilterText(e.target.value),
+        [setFilterText]);
+    const onFilterSpeciesChange = useCallback((species: Species[]) => setFilterSpecies(species),
+        [setFilterSpecies]);
+    const onFilterOriginsChange = useCallback((origins: string[]) => setFilterOrigins(origins),
+        [setFilterOrigins]);
+    const onFilterStatusChange = useCallback((status: Status) => setFilterStatus(status),
+        [setFilterStatus]);
+
+    useEffect(() => {
+        if (charactersDataToUse.length > 0) {
+            const filteredCharacters = filterCharacters({ charactersDataToUse, filterText, filterSpecies, filterOrigins, filterStatus })
+            if (!!filteredCharacters) setFilteredCharacters(filteredCharacters);
+        }
+    }, [filterText, filterSpecies, filterOrigins, filterStatus, charactersDataToUse, setFilteredCharacters])
+
     return (
         <div className="filters">
             <div className="d-flex flex-row">

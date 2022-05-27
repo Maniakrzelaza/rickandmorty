@@ -5,9 +5,7 @@ import { Character } from "rickmortyapi/dist/interfaces";
 import compose from "../hooks/compose-utils";
 import { withBreakpoints } from "../hooks/withBreakpoints";
 import { IWindowBreakpoints } from "../models/window.model";
-import { Species, Status } from "../data/character-model";
 import overrideDataService from "../data/override-data-service";
-import { filterCharacters } from "../data/character-functions";
 import TableFilters from "../components/table-filters/TableFilters";
 import CharacterTable from "../components/character-table/CharacterTable";
 
@@ -22,26 +20,9 @@ const AppContent: React.FC<IAppContent> = ({
     isLargeUp,
 }) => {
     const [selectedCharacters, setSelectedCharacters] = useState<React.Key[]>([]);
-    const [charactersDataToUse, setCharactersDataToUse] = useState<Character[]>([]);
+    const [charactersDataWithOverrides, setCharactersDataWithOverrides] = useState<Character[]>([]);
     const [filteredCharacters, setFilteredCharacters] = useState<Character[]>([]);
     const [isEditing, setEditing] = useState(false);
-    const [filterText, setFilterText] = useState<string>(null);
-    const [filterSpecies, setFilterSpecies] = useState<Species[]>([]);
-    const [filterOrigins, setFilterOrigins] = useState<string[]>([]);
-    const [filterStatus, setFilterStatus] = useState<Status>(null);
-
-    const onFilterTextChange: (e) => void = useCallback((e) => setFilterText(e.target.value), [setFilterText]);
-    const onFilterSpeciesChange: (species: Species[]) => void = useCallback((species: Species[]) => setFilterSpecies(species), [setFilterSpecies]);
-    const onFilterOriginsChange: (origins: string[]) => void = useCallback((origins: string[]) => setFilterOrigins(origins), [setFilterOrigins]);
-    const onFilterStatusChange: (status: Status) => void = useCallback((status: Status) => setFilterStatus(status), [setFilterStatus]);
-
-    useEffect(() => {
-        if (charactersDataToUse.length > 0) {
-            const filteredCharacters = filterCharacters({ charactersDataToUse, filterText, filterSpecies, filterOrigins, filterStatus })
-            if (!!filteredCharacters) setFilteredCharacters(filteredCharacters);
-        }
-    }, [filterText, filterSpecies, filterOrigins, filterStatus, charactersDataToUse])
-
     const numberOfSelectedCharacters = useMemo(() => selectedCharacters.length, [selectedCharacters]);
 
     const {
@@ -50,8 +31,8 @@ const AppContent: React.FC<IAppContent> = ({
     } = useCharactersData({ shouldLoad: dataLoaded })
 
     const mergeOverridesWithCharacters = useCallback(() => {
-        setCharactersDataToUse(overrideDataService.mergeDataWithOverrides(characterData));
-    }, [setCharactersDataToUse, characterData]);
+        setCharactersDataWithOverrides(overrideDataService.mergeDataWithOverrides(characterData));
+    }, [setCharactersDataWithOverrides, characterData]);
 
     useEffect(() => {
         mergeOverridesWithCharacters();
@@ -84,10 +65,8 @@ const AppContent: React.FC<IAppContent> = ({
                 </div>
                 <TableFilters
                     numberOfSelectedCharacters={numberOfSelectedCharacters}
-                    onFilterSpeciesChange={onFilterSpeciesChange}
-                    onFilterTextChange={onFilterTextChange}
-                    onFilterOriginsChange={onFilterOriginsChange}
-                    onFilterStatusChange={onFilterStatusChange}
+                    setFilteredCharacters={setFilteredCharacters}
+                    charactersDataToUse={charactersDataWithOverrides}
                     toggleEditable={toggleEditable}
                     removeCharacters={removeCharacters}
                 />
